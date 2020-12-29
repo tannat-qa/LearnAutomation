@@ -12,4 +12,10 @@ public class MainClassTest extends MainClass {
     public void testGetClassNumber() {
         Assert.assertTrue("Private field 'class_number' of MainClass is not great than 45!", getClassNumber() > 45);
     }
+
+    @Test
+    public void testGetClassString() {
+        Assert.assertTrue("Private field String 'class_string' is not contains 'hello' or 'Hello'.",
+                (getClassString().indexOf("Hello") > -1 || getClassString().indexOf("hello") > -1));
+    }
 }
