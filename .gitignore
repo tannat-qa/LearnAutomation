@@ -1,0 +1,11 @@
+
+.DS_Store
+*.iml
+.idea/libraries/libs.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+JavaAppiumAutomation/.idea/vcs.xml
+JavaAppiumAutomation/out/production/JavaAppiumAutomation/FirstTest.class
+JavaAppiumAutomation/out/production/JavaAppiumAutomation/FirstTest.class
