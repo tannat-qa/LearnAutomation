@@ -155,6 +155,22 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testForTextElementInSearchField() {
+        // Пропускаем skip
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find Skip button",
+                5
+        );
+
+        assertElementHasText(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_container']//*[@class='android.widget.TextView']"),
+                "Search Wikipedia",
+                "",
+                5);
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
@@ -188,6 +204,20 @@ public class FirstTest {
     private WebElement waitForElementAndClear(By by, String error_message, long timeoutInSeconds) {
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.clear();
+        return element;
+    }
+
+    private WebElement assertElementHasText(By by, String expected_text, String error_message, long timeoutInSeconds) {
+        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
+
+        String element_text = element.getAttribute("text");
+
+        Assert.assertEquals(
+                "The text field of the element is not equal expected text",
+                expected_text,
+                element_text
+        );
+
         return element;
     }
 }
