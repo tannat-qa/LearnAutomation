@@ -171,6 +171,55 @@ public class FirstTest {
                 5);
     }
 
+    @Test
+    public void testCancelSearchResults() {
+        // Пропускаем skip
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find Skip button",
+                5
+        );
+
+        // Ожидаем элемент поиска и выбираем его
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find Search Wikipedia input",
+                5
+        );
+
+        // кликаем по поиску (xpath) и вводим текст
+        waitForElementAndSendKeys(
+                By.xpath("//*[@text='Search Wikipedia']"),
+                "Android",
+                "Cannot find search input",
+                5
+        );
+
+        // Дожидаемся результата поиска - проверяем что пропал элемент на экране "Пустой результат"
+        waitForElementNotPresent(
+                By.id("org.wikipedia:id/search_empty_image"),
+                "The Search result is empty",
+                15
+        );
+
+        // Вычисляем количество результатов поиска
+        int elementsCountOnPage = getElementsCount(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description']"));
+        // Количество элементов должно быть больше 0
+        Assert.assertTrue("The search result is empty", elementsCountOnPage > 0);
+
+        // Отменяем результат поиска - Х
+        waitForElementAndClick(
+                By.xpath("//*[@class='android.widget.ImageButton']"),
+                "Cannot find X to cancel search",
+                5
+        );
+
+        // Проверяем, что отображение строк поиска пропало
+        elementsCountOnPage = getElementsCount(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description']"));
+        // Количество должно быть 0
+        Assert.assertTrue("The search result is not cleared", elementsCountOnPage == 0);
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
@@ -219,5 +268,10 @@ public class FirstTest {
         );
 
         return element;
+    }
+
+    private int getElementsCount(By by) {
+        int elementsCount = driver.findElements(by).size();
+        return elementsCount;
     }
 }
