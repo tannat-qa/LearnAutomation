@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.util.List;
 
 public class FirstTest {
 
@@ -218,6 +219,55 @@ public class FirstTest {
         elementsCountOnPage = getElementsCount(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_description']"));
         // Количество должно быть 0
         Assert.assertTrue("The search result is not cleared", elementsCountOnPage == 0);
+    }
+
+    @Test
+    public void testCheckSearchResultStrings() {
+        String search_str = "Java";
+
+        // Пропускаем skip
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find Skip button",
+                5
+        );
+
+        // Ожидаем элемент поиска и выбираем его
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find Search Wikipedia input",
+                5
+        );
+
+        // кликаем по поиску (xpath) и вводим текст
+        waitForElementAndSendKeys(
+                By.xpath("//*[@text='Search Wikipedia']"),
+                search_str,
+                "Cannot find search input",
+                5
+        );
+
+        // Дожидаемся результата поиска
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"),
+                "Cannot find search results on page",
+                15
+        );
+
+        // Вычисляем количество строк результата поиска
+        int elementsCountOnPage = getElementsCount(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"));
+        // Количество элементов должно быть больше 0
+        Assert.assertTrue("The search result is empty", elementsCountOnPage > 0);
+
+        // Проходим по каждому элементу результата поиска и проверяем наличие заданного слова
+        List<WebElement> element_list = driver.findElements(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"));
+        String str;
+        search_str = search_str.toLowerCase();
+
+        for (int i = 0; i < elementsCountOnPage; i++) {
+            str = element_list.get(i).getAttribute("text").toLowerCase();
+            Assert.assertTrue("The search result string does not contain search word " + search_str, str.indexOf(search_str) > -1);
+        }
     }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
