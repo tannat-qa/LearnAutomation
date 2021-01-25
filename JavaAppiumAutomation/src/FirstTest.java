@@ -5,10 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -750,6 +747,37 @@ public class FirstTest {
                 "Article title have been changed after opening it from saved list",
                 title_article,
                 title_after_opening
+        );
+    }
+
+    @Test
+    public void assertElementPresent() {
+        // Ожидаем элемент поиска и выбираем его
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        String searh_line = "Olympic games";
+
+        // кликаем по поиску (xpath) и вводим текст
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                searh_line,
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Major international sport event']"),
+                "Cannot find 'Major international sport event' topic searching by '" + searh_line + "'",
+                5
+        );
+
+        Assert.assertTrue(
+                "Cannot find article title",
+                driver.findElement(By.id("org.wikipedia:id/view_page_title_text")).isDisplayed() == true
         );
     }
 
