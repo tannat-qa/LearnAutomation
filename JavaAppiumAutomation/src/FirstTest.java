@@ -261,7 +261,7 @@ public class FirstTest {
     }
 
     @Test
-    public void saveFirstArticleToMyList() throws InterruptedException {
+    public void saveFirstArticleToMyList() {
         // Ожидаем элемент поиска и выбираем его
         waitForElementAndClick(
                 By.id("org.wikipedia:id/search_container"),
@@ -296,7 +296,7 @@ public class FirstTest {
         );
 
         // Ожидаем прогрузку всего меню
-        waitForMenuToRender(
+        waitForElementFullyLoaded(
                 By.xpath("//android.widget.LinearLayout"),
                 6,
                 "The popup menu was not loaded fully",
@@ -348,7 +348,13 @@ public class FirstTest {
                 5
         );
 
-        System.out.println("xpath = '//*[@text='" + name_of_folder + "']'");
+        // Ждем загрузку списка папок
+        waitForElementFullyLoaded(
+                By.xpath("//*[@resource-id='org.wikipedia:id/reading_list_list']/*[@class='android.widget.FrameLayout']"),
+                1,
+                "The folder list was not loaded fully",
+                15
+        );
 
         waitForElementAndClick(
                 By.xpath("//*[@text='" + name_of_folder + "']"),
@@ -536,6 +542,217 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void saveTwoArticlesToMyList() {
+        // Ожидаем элемент поиска и выбираем его
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input (1)",
+                5
+        );
+
+        String searh_line = "Java";
+
+        // кликаем по поиску (xpath) и вводим текст
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                searh_line,
+                "Cannot find search input (1)",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' topic searching by '" + searh_line + "'",
+                5
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Cannot find article title (1)",
+                15
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+                "Cannot find button to open article options (1)",
+                5
+        );
+
+        // Ожидаем прогрузку всего меню
+        waitForElementFullyLoaded(
+                By.xpath("//android.widget.LinearLayout"),
+                6,
+                "The popup menu was not loaded fully (1)",
+                15);
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Add to reading list']"),
+                "Cannot find option to add article to reading list",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/onboarding_button"),
+                "Cannot find 'Got it' tip overlay",
+                5
+        );
+
+        waitForElementAndClear(
+                By.id("org.wikipedia:id/text_input"),
+                "Cannot find input to set name of articles folder",
+                5
+        );
+
+        String name_of_folder = "Learning automation";
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/text_input"),
+                name_of_folder,
+                "Cannot put text into articles folder input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("android:id/button1"),
+                "Cannot press OK button",
+                5
+        );
+
+        // Поиск второй статьи
+        // Возвращаемся назад
+        waitForElementAndClick(
+                By.xpath("//*[@content-desc='Navigate up']"),
+                "Cannot close article, cannot find X link",
+                5
+        );
+
+        // Ожидаем элемент поиска и выбираем его
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input (2)",
+                5
+        );
+
+        searh_line = "Appium";
+
+        // кликаем по поиску (xpath) и вводим текст
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                searh_line,
+                "Cannot find search input (2)",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title'][@text='Appium']"),
+                "Cannot find topic searching by '" + searh_line + "'",
+                5
+        );
+
+        String title_article = waitForElementAndGetAttribute(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "text",
+                "Cannot find article title (2)",
+                15
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+                "Cannot find button to open article options (2)",
+                5
+        );
+
+        // Ожидаем прогрузку всего меню
+        waitForElementFullyLoaded(
+                By.xpath("//android.widget.LinearLayout"),
+                5,
+                "The popup menu was not loaded fully (2)",
+                15);
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Add to reading list']"),
+                "Cannot find option to add article to reading list (2)",
+                5
+        );
+
+        // Ждем загрузку списка папок
+        waitForElementFullyLoaded(
+                By.xpath("//*[@resource-id='org.wikipedia:id/list_of_lists']/*[@class='android.widget.FrameLayout']"),
+                1,
+                "The folder list was not loaded fully",
+                15
+        );
+
+        // Выбираем созданный список
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/item_title'][@text='" + name_of_folder + "']"),
+                "Cannot find folder '" + name_of_folder + "'",
+                5
+        );
+
+        // Возвращаемся назад
+        waitForElementAndClick(
+               By.xpath("//*[@content-desc='Navigate up']"),
+                "Cannot close article, cannot find X link",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.FrameLayout[@content-desc='My lists']"),
+                "Cannot find navigation button to My list",
+                5
+        );
+
+        // Ждем загрузку списка папок
+        waitForElementFullyLoaded(
+                By.xpath("//*[@resource-id='org.wikipedia:id/reading_list_list']/*[@class='android.widget.FrameLayout']"),
+                1,
+                "The folder list was not loaded fully (2)",
+                15
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='" + name_of_folder + "']"),
+                "Cannot find created folder",
+                5
+        );
+
+        // Удаляем первую статью свайпом
+        swipeElementToLeft(
+                By.xpath("//*[@text='Java (programming language)']"),
+                "Cannot find saved article (1)"
+        );
+
+        // Проверяем что статья удалилась
+        waitForElementNotPresent(
+                By.xpath("//*[@text='Java (programming language)']"),
+                "Cannot delete saved article 'Java (programming language)'",
+                5
+        );
+
+        // Проверяем что осталась вторая статья и выбираем ее
+        waitForElementAndClick(
+                By.xpath("//*[@text='Appium']"),
+                "Cannot find the second article 'Appium' in list",
+                5
+        );
+
+        // Проверяем название статьи
+        String title_after_opening = waitForElementAndGetAttribute(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "text",
+                "Cannot find title of article (3)",
+                15
+        );
+
+        Assert.assertEquals(
+                "Article title have been changed after opening it from saved list",
+                title_article,
+                title_after_opening
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
@@ -645,7 +862,7 @@ public class FirstTest {
                 .perform();
     }
 
-    private void waitForMenuToRender(By by, int count_of_elements, String error_message, long timeoutInSeconds) {
+    private void waitForElementFullyLoaded(By by, int count_of_elements, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
         wait.until(ExpectedConditions.numberOfElementsToBe(by, count_of_elements));
