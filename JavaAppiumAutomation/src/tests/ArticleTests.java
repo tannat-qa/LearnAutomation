@@ -4,6 +4,7 @@ import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 public class ArticleTests extends CoreTestCase {
 
@@ -36,5 +37,21 @@ public class ArticleTests extends CoreTestCase {
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.swipeToFooter();
+    }
+
+    @Test
+    public void testAssertElementPresent() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+
+        String search_line = "Olympic games";
+        SearchPageObject.typeSearchLine(search_line);
+        SearchPageObject.clickByArticleWithSubstring("Major international sport event");
+
+        assertTrue(
+                "Cannot find article title",
+                driver.findElement(By.id("org.wikipedia:id/view_page_title_text")).isDisplayed() == true
+        );
     }
 }

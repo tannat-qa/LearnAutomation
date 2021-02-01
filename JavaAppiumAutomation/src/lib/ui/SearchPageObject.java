@@ -1,7 +1,9 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class SearchPageObject extends MainPageObject {
 
@@ -11,7 +13,9 @@ public class SearchPageObject extends MainPageObject {
         SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
         SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='{SUBSTRING}']",
         SEARCH_RESULT_ELEMENT = "//*[@resource-id='org.wikipedia:id/search_results_list']/*[@resource-id='org.wikipedia:id/page_list_item_container']",
-        SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results found']";
+        SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results found']",
+        SEARCH_EMPTY_RESULT_IMAGE = "org.wikipedia:id/search_empty_image",
+        SEARCH_INIT_ELEMENT_FIELD = "//*[@resource-id='org.wikipedia:id/search_container']//android.widget.TextView";
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -64,6 +68,10 @@ public class SearchPageObject extends MainPageObject {
         return this.getAmountOfElements(By.xpath(SEARCH_RESULT_ELEMENT));
     }
 
+    public int getAmountOfArticles() {
+        return this.getAmountOfElements(By.xpath(SEARCH_RESULT_ELEMENT));
+    }
+
     public void waitForEmptyResultsLabel() {
         this.waitForElementPresent(By.xpath(SEARCH_EMPTY_RESULT_ELEMENT), "Cannot find empty result element", 15);
 
@@ -71,5 +79,23 @@ public class SearchPageObject extends MainPageObject {
 
     public void assertThereIsNoResultOfSearch() {
         this.assertElementNotPresent(By.xpath(SEARCH_RESULT_ELEMENT),"We supposed not to find any results");
+    }
+
+    public void waitForEmptyResultsImageNotPresent() {
+        this.waitForElementNotPresent(By.id(SEARCH_EMPTY_RESULT_IMAGE), "The Search result is empty", 15);
+    }
+
+    public WebElement assertSearchElementHasText(String expected_text) {
+        WebElement element = this.waitForElementPresent(By.xpath(SEARCH_INIT_ELEMENT_FIELD), "", 5);
+
+        String element_text = element.getAttribute("text");
+
+        Assert.assertEquals(
+                "The text field of the element is not equal expected text",
+                expected_text,
+                element_text
+        );
+
+        return element;
     }
 }

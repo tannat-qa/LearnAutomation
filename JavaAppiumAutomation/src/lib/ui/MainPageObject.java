@@ -55,20 +55,6 @@ public class MainPageObject {
         return element;
     }
 
-    public WebElement assertElementHasText(By by, String expected_text, String error_message, long timeoutInSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
-
-        String element_text = element.getAttribute("text");
-
-        Assert.assertEquals(
-                "The text field of the element is not equal expected text",
-                expected_text,
-                element_text
-        );
-
-        return element;
-    }
-
     public int getAmountOfElements(By by) {
         List elementsCount = driver.findElements(by);
         return elementsCount.size();
@@ -140,10 +126,5 @@ public class MainPageObject {
             String default_message = "An element '" + by.toString() + "' supposed to be not present";
             throw new AssertionError(default_message + " " + error_message);
         }
-    }
-
-    public String waitForElementAndGetAttribute(By by, String attribute, String error_message, long timeoutInSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
-        return element.getAttribute(attribute);
     }
 }
