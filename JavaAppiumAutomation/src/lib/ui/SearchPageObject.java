@@ -15,7 +15,8 @@ public class SearchPageObject extends MainPageObject {
         SEARCH_RESULT_ELEMENT = "//*[@resource-id='org.wikipedia:id/search_results_list']/*[@resource-id='org.wikipedia:id/page_list_item_container']",
         SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results found']",
         SEARCH_EMPTY_RESULT_IMAGE = "org.wikipedia:id/search_empty_image",
-        SEARCH_INIT_ELEMENT_FIELD = "//*[@resource-id='org.wikipedia:id/search_container']//android.widget.TextView";
+        SEARCH_INIT_ELEMENT_FIELD = "//*[@resource-id='org.wikipedia:id/search_container']//android.widget.TextView",
+        SEARCH_RESULT_ELEMENT_BY_TITLE_AND_DESC = "//*[@resource-id='org.wikipedia:id/page_list_item_container' and .//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='{TITLE}'] and ..//*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='{DESCRIPTION}']]";
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -24,6 +25,10 @@ public class SearchPageObject extends MainPageObject {
     /* TEMPLATE METHODS */
     private static String getResultSearchElement(String substring) {
         return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
+    }
+
+    private static String getResultSearchElementByTitleAndDescription(String article_title, String article_description) {
+        return SEARCH_RESULT_ELEMENT_BY_TITLE_AND_DESC.replace("{TITLE}", article_title).replace("{DESCRIPTION}", article_description);
     }
     /* TEMPLATE METHODS */
 
@@ -97,5 +102,10 @@ public class SearchPageObject extends MainPageObject {
         );
 
         return element;
+    }
+
+    public void waitForElementByTitleAndDescription(String title, String description) {
+        String search_result_xpath = getResultSearchElementByTitleAndDescription(title, description);
+        this.waitForElementPresent(By.xpath(search_result_xpath), "Cannot find article with title '" + title + "' and description '" + description + "'", 5);
     }
 }

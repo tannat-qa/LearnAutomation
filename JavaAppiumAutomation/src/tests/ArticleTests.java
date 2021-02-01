@@ -54,4 +54,16 @@ public class ArticleTests extends CoreTestCase {
                 driver.findElement(By.id("org.wikipedia:id/view_page_title_text")).isDisplayed() == true
         );
     }
+
+    @Test
+    public void testSearchArticlesByTitleAndDescription() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Olympic");
+
+        SearchPageObject.waitForElementByTitleAndDescription("Olympic", "Wikimedia disambiguation page");
+        SearchPageObject.waitForElementByTitleAndDescription("Olympic Games", "Major international sport event");
+        SearchPageObject.waitForElementByTitleAndDescription("Olympic symbols", "Symbols of the International Olympic Games");
+    }
 }
