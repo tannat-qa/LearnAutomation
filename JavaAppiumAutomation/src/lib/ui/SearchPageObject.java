@@ -1,6 +1,7 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
@@ -91,8 +92,13 @@ abstract public class SearchPageObject extends MainPageObject {
 
     public WebElement assertSearchElementHasText(String expected_text) {
         WebElement element = this.waitForElementPresent(SEARCH_INIT_ELEMENT_FIELD, "Cannot find search init element", 5);
+        String element_text;
 
-        String element_text = element.getAttribute("text");
+        if (Platform.getInstance().isAndroid()) {
+            element_text = element.getAttribute("text");
+        } else {
+            element_text = element.getAttribute("name");
+        }
 
         Assert.assertEquals(
                 "The text field of the element is not equal expected text",

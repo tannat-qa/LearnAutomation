@@ -1,6 +1,7 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.Platform;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
@@ -8,12 +9,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+import java.util.Locale;
 
 public class SearchTests extends CoreTestCase {
 
     @Test
     public void testSearch() {
-        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);;
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -22,7 +24,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testCancelSearch() {
-        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);;
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.waitForCancelButtonToAppear();
@@ -100,12 +102,23 @@ public class SearchTests extends CoreTestCase {
         );
 
         // Проходим по каждому элементу результата поиска и проверяем наличие заданного слова
-        List<WebElement> element_list = driver.findElements(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"));
+        List<WebElement> element_list;
+
+        if (Platform.getInstance().isAndroid()) {
+            element_list = driver.findElements(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"));
+        } else {
+            element_list = driver.findElements(By.xpath("//XCUIElementTypeLink[@type='XCUIElementTypeLink']"));
+        }
+
         String str;
         search_line = search_line.toLowerCase();
 
         for (int i = 0; i < elementsCountOnPage; i++) {
-            str = element_list.get(i).getAttribute("text").toLowerCase();
+            if (Platform.getInstance().isAndroid()) {
+                str = element_list.get(i).getAttribute("text").toLowerCase();
+            } else {
+                str = element_list.get(i).getAttribute("name").toLowerCase();
+            }
             assertTrue("The search result string does not contain search word " + search_line, str.indexOf(search_line) > -1);
         }
     }

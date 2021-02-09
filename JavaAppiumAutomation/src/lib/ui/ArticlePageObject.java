@@ -16,7 +16,8 @@ abstract public class ArticlePageObject extends MainPageObject {
         MY_LIST_OK_BUTTON,
         CLOSE_ARTICLE_BUTTON,
         MY_LIST_FULL_LIST,
-        MY_LIST_SELECT_TPL;
+        MY_LIST_SELECT_TPL,
+        CLOSE_SYNC_ARTICLES_TO_CLOUD_BUTTON;
 
     public ArticlePageObject(AppiumDriver driver) {
         super(driver);
@@ -142,6 +143,7 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     public void addArticlesToMySaved() {
         this.waitForElementAndClick(OPTIONS_ADD_TO_MY_LIST_BUTTON, "Cannot find option to add article to reading list", 5);
+        this.waitForElementAndClick(CLOSE_SYNC_ARTICLES_TO_CLOUD_BUTTON, "Cannot find x button to close sync articles to cloud", 10);
     }
 
     public void closeArticle() {

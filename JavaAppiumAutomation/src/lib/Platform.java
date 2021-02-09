@@ -59,8 +59,8 @@ public class Platform {
     private DesiredCapabilities getIOSDesiredCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "iOS");
-        capabilities.setCapability("deviceName", "iPhone 8");
-        capabilities.setCapability("platformVersion", "12.4");
+        capabilities.setCapability("deviceName", "iPhone SE");
+        capabilities.setCapability("platformVersion", "11.4");
         capabilities.setCapability("app", "/Users/tannat/Documents/GitHub/LearnAutomation/JavaAppiumAutomation/apks/Wikipedia.app");
         return capabilities;
     }

@@ -1,6 +1,7 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.Platform;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.ArticlePageObjectFactory;
@@ -33,8 +34,8 @@ public class ArticleTests extends CoreTestCase {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);;
 
         SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLine("ZooParc de Beauval");
-        SearchPageObject.clickByArticleWithSubstring("Zoo in France");
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
@@ -51,10 +52,15 @@ public class ArticleTests extends CoreTestCase {
         SearchPageObject.typeSearchLine(search_line);
         SearchPageObject.clickByArticleWithSubstring("Major international sport event");
 
-        assertTrue(
+        if (Platform.getInstance().isAndroid()) {
+            assertTrue(
                 "Cannot find article title",
-                driver.findElement(By.id("org.wikipedia:id/view_page_title_text")).isDisplayed() == true
-        );
+                driver.findElement(By.id("org.wikipedia:id/view_page_title_text")).isDisplayed() == true);
+        } else {
+            assertTrue(
+                    "Cannot find article title",
+                    driver.findElement(By.id("Olympic Games")).isDisplayed() == true);
+        }
     }
 
     @Test
