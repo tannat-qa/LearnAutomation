@@ -65,7 +65,7 @@ public class ArticleTests extends CoreTestCase {
 
     @Test
     public void testSearchArticlesByTitleAndDescription() {
-        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);;
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Olympic");

@@ -12,6 +12,7 @@ public class IOSSearchPageObject extends SearchPageObject {
         SEARCH_RESULT_ELEMENT = "xpath://XCUIElementTypeLink";
         SEARCH_EMPTY_RESULT_ELEMENT = "xpath://XCUIElementTypeStaticText[@name='No results found']";
         SEARCH_INIT_ELEMENT_FIELD = "xpath://XCUIElementTypeSearchField";
+        SEARCH_RESULT_ELEMENT_BY_TITLE_AND_DESC = "xpath://XCUIElementTypeLink[@name='{TITLE}\n{DESCRIPTION}']";
     }
 
     public IOSSearchPageObject(AppiumDriver driver) {
