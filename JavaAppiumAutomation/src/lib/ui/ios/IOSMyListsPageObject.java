@@ -6,8 +6,8 @@ import lib.ui.MyListsPageObject;
 public class IOSMyListsPageObject extends MyListsPageObject {
     static {
         ARTICLE_BY_TITLE_TPL = "xpath://XCUIElementTypeLink[contains(@name, '{TITLE}')]";
-        MY_LISTS_ELEMENT = "xpath://android.widget.FrameLayout[@content-desc='My lists']";
-        FOLDER_LISTS_ELEMENTS = "xpath://*[@resource-id='org.wikipedia:id/reading_list_list']/*[@class='android.widget.FrameLayout']";
+        FIRST_SAVED_ARTICLE_PATH = "xpath://XCUIElementTypeCell[@index=0]";
+        IS_ARTICLE_SAVED_ELEMENT = "xpath://XCUIElementTypeButton[contains(@name,'Saved')]";
     }
 
     public IOSMyListsPageObject(AppiumDriver driver) {

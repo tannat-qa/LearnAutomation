@@ -9,7 +9,9 @@ abstract public class MyListsPageObject extends MainPageObject {
         FOLDER_BY_NAME_TPL,
         ARTICLE_BY_TITLE_TPL,
         MY_LISTS_ELEMENT,
-        FOLDER_LISTS_ELEMENTS;
+        FOLDER_LISTS_ELEMENTS,
+        FIRST_SAVED_ARTICLE_PATH,
+        IS_ARTICLE_SAVED_ELEMENT;
 
     private static String getFolderXpathByName(String name_of_folder) {
         return FOLDER_BY_NAME_TPL.replace("{FOLDER_NAME}", name_of_folder);
@@ -66,6 +68,22 @@ abstract public class MyListsPageObject extends MainPageObject {
                 count_of_folders,
                 "The folder list was not loaded fully",
                 15
+        );
+    }
+
+    public void openFirstSavedArticleFromList() {
+        this.waitForElementAndClick(
+                FIRST_SAVED_ARTICLE_PATH,
+                "Cannot find article to open in saved list",
+                5
+        );
+    }
+
+    public void checkOpenedArticleIsSaved() {
+        this.waitForElementPresent(
+                IS_ARTICLE_SAVED_ELEMENT,
+                "The article is not saved",
+                5
         );
     }
 }

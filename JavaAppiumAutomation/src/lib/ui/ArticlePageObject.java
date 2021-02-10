@@ -17,11 +17,14 @@ abstract public class ArticlePageObject extends MainPageObject {
         CLOSE_ARTICLE_BUTTON,
         MY_LIST_FULL_LIST,
         MY_LIST_SELECT_TPL,
-        CLOSE_SYNC_ARTICLES_TO_CLOUD_BUTTON;
+        CLOSE_SYNC_ARTICLES_TO_CLOUD_BUTTON,
+        CLEAR_SEARCH_INPUT;
 
     public ArticlePageObject(AppiumDriver driver) {
         super(driver);
     }
+
+    private boolean isClosedSyncArticlesToCloud = false;
 
     /* TEMPLATE METHODS */
     private static String getResultMyListSelectElement(String substring) {
@@ -48,7 +51,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             this.swipeUpToFindElement(
                     FOOTER_ELEMENT,
                     "Cannot find the end of article",
-                    40);
+                    100);
         } else {
             this.swipeUpTillElementAppear(
                     FOOTER_ELEMENT,
@@ -143,13 +146,25 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     public void addArticlesToMySaved() {
         this.waitForElementAndClick(OPTIONS_ADD_TO_MY_LIST_BUTTON, "Cannot find option to add article to reading list", 5);
-        this.waitForElementAndClick(CLOSE_SYNC_ARTICLES_TO_CLOUD_BUTTON, "Cannot find x button to close sync articles to cloud", 10);
+
+        if (!isClosedSyncArticlesToCloud) {
+            this.waitForElementAndClick(CLOSE_SYNC_ARTICLES_TO_CLOUD_BUTTON, "Cannot find x button to close sync articles to cloud", 10);
+            isClosedSyncArticlesToCloud = true;
+        }
     }
 
     public void closeArticle() {
         this.waitForElementAndClick(
                 CLOSE_ARTICLE_BUTTON,
                 "Cannot close article, cannot find X link",
+                5
+        );
+    }
+
+    public void clearPreviousSearchInput() {
+        this.waitForElementAndClick(
+                CLEAR_SEARCH_INPUT,
+                "Cannot clear previous search input",
                 5
         );
     }

@@ -9,7 +9,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
-import java.util.Locale;
 
 public class SearchTests extends CoreTestCase {
 
@@ -66,8 +65,6 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         String search_line = "Android";
         SearchPageObject.typeSearchLine(search_line);
-        // Дожидаемся результата поиска - проверяем что пропал элемент на экране "Пустой результат"
-        SearchPageObject.waitForEmptyResultsImageNotPresent();
 
         int elementsCountOnPage = SearchPageObject.getAmountOfFoundArticles();
         assertTrue(
@@ -90,9 +87,6 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         String search_line = "Java";
         SearchPageObject.typeSearchLine(search_line);
-
-        // Дожидаемся результата поиска - проверяем что пропал элемент на экране "Пустой результат"
-        SearchPageObject.waitForEmptyResultsImageNotPresent();
 
         // Вычисляем количество строк результата поиска
         int elementsCountOnPage = SearchPageObject.getAmountOfFoundArticles();
