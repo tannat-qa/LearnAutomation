@@ -76,7 +76,11 @@ public class ArticleTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Olympic");
 
-        SearchPageObject.waitForElementByTitleAndDescription("Olympic", "Wikimedia disambiguation page");
+        if (Platform.getInstance().isMw()) {
+            SearchPageObject.waitForElementByTitleAndDescription("Olympic", "Disambiguation page providing links to topics that could be referred to by the same search term");
+        } else {
+            SearchPageObject.waitForElementByTitleAndDescription("Olympic", "Wikimedia disambiguation page");
+        }
         SearchPageObject.waitForElementByTitleAndDescription("Olympic Games", "Major international sport event");
         SearchPageObject.waitForElementByTitleAndDescription("Olympic symbols", "Symbols of the International Olympic Games");
     }
