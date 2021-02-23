@@ -72,7 +72,7 @@ public class MyListsTest extends CoreTestCase {
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubstring("bject-oriented programming language");
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
@@ -84,6 +84,22 @@ public class MyListsTest extends CoreTestCase {
         } else {
             ArticlePageObject.addArticlesToMySaved();
         }
+
+        if (Platform.getInstance().isMw()) {
+            AuthorizationPageObject Auth = new AuthorizationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();
+
+            ArticlePageObject.waitForTitleElement();
+
+            assertEquals("We are not on the same page after login",
+                    article_title_1,
+                    ArticlePageObject.getArticleTitle());
+
+            ArticlePageObject.addArticlesToMySaved();
+        }
+
         ArticlePageObject.closeArticle();
 
         SearchPageObject.initSearchInput();
@@ -92,7 +108,12 @@ public class MyListsTest extends CoreTestCase {
             ArticlePageObject.clearPreviousSearchInput();
         }
         SearchPageObject.typeSearchLine("Appium");
-        SearchPageObject.clickByArticleWithSubstring("Appium");
+
+        if (Platform.getInstance().isMw()) {
+            SearchPageObject.clickByArticleWithoutSubstring("Appium");
+        } else {
+            SearchPageObject.clickByArticleWithSubstring("Appium");
+        }
 
         String article_title_2 = ""; // название второй статьи (используется в тесте для Android)
 
@@ -106,6 +127,7 @@ public class MyListsTest extends CoreTestCase {
         ArticlePageObject.closeArticle();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+        NavigationUI.openNavigation();
         NavigationUI.clickMyList();
 
         MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
@@ -130,9 +152,8 @@ public class MyListsTest extends CoreTestCase {
         } else {
             // Открываем первую статью из списка
             MyListsPageObject.openFirstSavedArticleFromList();
-            // Проверяем, что статья сохранена - "флажок" Saved внизу экрана установлен
-            MyListsPageObject.checkOpenedArticleIsSaved();
-
+            // Проверяем, что статья сохранена - "флажок" Saved внизу экрана (iOS) (звезда в MW) установлен
+            ArticlePageObject.checkOpenedArticleIsSaved();
         }
     }
 }

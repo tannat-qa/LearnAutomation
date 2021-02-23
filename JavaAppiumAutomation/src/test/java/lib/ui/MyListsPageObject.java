@@ -11,7 +11,6 @@ abstract public class MyListsPageObject extends MainPageObject {
         MY_LISTS_ELEMENT,
         FOLDER_LISTS_ELEMENTS,
         FIRST_SAVED_ARTICLE_PATH,
-        IS_ARTICLE_SAVED_ELEMENT,
         REMOVE_FROM_SAVED_BUTTON;
 
     private static String getFolderXpathByName(String name_of_folder) {
@@ -93,14 +92,6 @@ abstract public class MyListsPageObject extends MainPageObject {
         this.waitForElementAndClick(
                 FIRST_SAVED_ARTICLE_PATH,
                 "Cannot find article to open in saved list",
-                5
-        );
-    }
-
-    public void checkOpenedArticleIsSaved() {
-        this.waitForElementPresent(
-                IS_ARTICLE_SAVED_ELEMENT,
-                "The article is not saved",
                 5
         );
     }

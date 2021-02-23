@@ -15,7 +15,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import lib.Platform;
@@ -26,7 +25,6 @@ public class MainPageObject {
 
     public MainPageObject(RemoteWebDriver driver) {
         this.driver = driver;
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     public WebElement waitForElementPresent(String locator, String error_message, long timeoutInSeconds) {
@@ -256,11 +254,11 @@ public class MainPageObject {
 
         while (need_more_attempts) {
             try {
-                this.waitForElementAndClick(locator, error_message, 1);
+                this.waitForElementAndClick(locator, error_message, 5);
                 need_more_attempts = false;
             } catch (Exception e) {
                 if (current_attemps > amount_of_attempts) {
-                    this.waitForElementAndClick(locator, error_message, 1);
+                    this.waitForElementAndClick(locator, error_message, 5);
                 }
             }
             ++ current_attemps;

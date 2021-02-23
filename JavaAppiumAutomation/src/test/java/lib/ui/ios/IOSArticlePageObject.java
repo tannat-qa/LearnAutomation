@@ -12,6 +12,7 @@ public class IOSArticlePageObject extends ArticlePageObject
         CLOSE_ARTICLE_BUTTON = "id:Back";
         CLOSE_SYNC_ARTICLES_TO_CLOUD_BUTTON = "xpath://XCUIElementTypeButton[@name='places auth close']";
         CLEAR_SEARCH_INPUT = "id:clear mini";
+        OPTIONS_REMOVE_FROM_MY_LIST_BUTTON = "xpath://XCUIElementTypeButton[contains(@name,'Saved')]";
     }
 
     public IOSArticlePageObject(RemoteWebDriver driver) {

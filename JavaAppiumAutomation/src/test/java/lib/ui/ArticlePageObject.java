@@ -157,7 +157,6 @@ abstract public class ArticlePageObject extends MainPageObject {
         if (Platform.getInstance().isMw()) {
             this.removeArticleFromSavedIfItAdded();
         }
-
         this.waitForElementAndClick(OPTIONS_ADD_TO_MY_LIST_BUTTON, "Cannot find option to add article to reading list", 5);
 
         if (Platform.getInstance().isIOS() && !isClosedSyncArticlesToCloud) {
@@ -197,5 +196,13 @@ abstract public class ArticlePageObject extends MainPageObject {
                     "Cannot find button to add an article to saved list after removing it from this list before",
                     1);
         }
+    }
+
+    public void checkOpenedArticleIsSaved() {
+        this.waitForElementPresent(
+                OPTIONS_REMOVE_FROM_MY_LIST_BUTTON,
+                "The article is not saved",
+                5
+        );
     }
 }

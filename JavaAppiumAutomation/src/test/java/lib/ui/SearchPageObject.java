@@ -16,7 +16,8 @@ abstract public class SearchPageObject extends MainPageObject {
         SEARCH_EMPTY_RESULT_ELEMENT,
         SEARCH_EMPTY_RESULT_IMAGE,
         SEARCH_INIT_ELEMENT_FIELD,
-        SEARCH_RESULT_ELEMENT_BY_TITLE_AND_DESC;
+        SEARCH_RESULT_ELEMENT_BY_TITLE_AND_DESC,
+        SEARCH_RESULT_BY_ARTICLE_BY_SUBSTRING_TPL;
 
     public SearchPageObject(RemoteWebDriver driver) {
         super(driver);
@@ -25,7 +26,10 @@ abstract public class SearchPageObject extends MainPageObject {
     /* TEMPLATE METHODS */
     private static String getResultSearchElement(String substring) {
         return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
-        //return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring).toLowerCase();
+    }
+
+    private static String getResultSearchElementbyArticleTitle(String substring) {
+        return SEARCH_RESULT_BY_ARTICLE_BY_SUBSTRING_TPL.replace("{TITLE}", substring);
     }
 
     private static String getResultSearchElementByTitleAndDescription(String article_title, String article_description) {
@@ -61,6 +65,11 @@ abstract public class SearchPageObject extends MainPageObject {
 
     public void clickByArticleWithSubstring(String substring) {
         String search_result_xpath = getResultSearchElement(substring);
+        this.waitForElementAndClick(search_result_xpath, "Cannot find and click search result with substring " + substring, 10);
+    }
+
+    public void clickByArticleWithoutSubstring(String substring) {
+        String search_result_xpath = getResultSearchElementbyArticleTitle(substring);
         this.waitForElementAndClick(search_result_xpath, "Cannot find and click search result with substring " + substring, 10);
     }
 

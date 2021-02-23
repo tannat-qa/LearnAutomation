@@ -7,6 +7,7 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class CoreTestCase extends TestCase {
 
@@ -16,6 +17,7 @@ public class CoreTestCase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         driver = Platform.getInstance().getDriver();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         this.rotateScreenPortrait();
         this.skipWelcomePageForIOSApp();
         this.openWikiWebPageForMobileWeb();
