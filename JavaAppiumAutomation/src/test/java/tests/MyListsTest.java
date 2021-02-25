@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.Platform;
 import lib.ui.*;
@@ -10,6 +12,7 @@ import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+@Epic("Tests for My Lists option")
 public class MyListsTest extends CoreTestCase {
     private static final String name_of_folder = "Learning programming";
     private static final String
@@ -18,6 +21,11 @@ public class MyListsTest extends CoreTestCase {
 
 
     @Test
+    @Features(value = {@Feature(value="MyLists"),@Feature(value="Article")})
+    @DisplayName("Save the first article to my lists")
+    @Description("Save the first article to my lists and then delete from it")
+    @Step("Starting test testSaveFirstArticleToMyList")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testSaveFirstArticleToMyList() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);;
 
@@ -68,6 +76,11 @@ public class MyListsTest extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value="MyLists"),@Feature(value="Article")})
+    @DisplayName("Save two articles to my lists")
+    @Description("Save two articles to my lists and then delete one of them and check that another is still present in the list")
+    @Step("Starting test testSaveTwoArticlesToMyList")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testSaveTwoArticlesToMyList() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -111,7 +124,7 @@ public class MyListsTest extends CoreTestCase {
         SearchPageObject.typeSearchLine("Appium");
 
         if (Platform.getInstance().isMw()) {
-            SearchPageObject.clickByArticleWithoutSubstring("Appium");
+            SearchPageObject.clickByArticleWithoutDescription("Appium");
         } else {
             SearchPageObject.clickByArticleWithSubstring("Appium");
         }

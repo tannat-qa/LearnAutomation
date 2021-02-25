@@ -64,19 +64,20 @@ abstract public class SearchPageObject extends MainPageObject {
         this.waitForElementAndSendKeys(SEARCH_INPUT, search_line, "Cannot find and type into search input", 5);
     }
 
-    @Step("Waiting for search result")
+    @Step("Waiting for search result with substring '{substring}'")
     public void waitForSearchResult(String substring) {
         String search_result_xpath = getResultSearchElement(substring);
         this.waitForElementPresent(search_result_xpath, "Cannot find search result with substring " + substring);
     }
 
-    @Step("Waiting for search result and select an article by substring in article title")
+    @Step("Waiting for search result and click article that contains substring '{substring}' in title")
     public void clickByArticleWithSubstring(String substring) {
         String search_result_xpath = getResultSearchElement(substring);
         this.waitForElementAndClick(search_result_xpath, "Cannot find and click search result with substring " + substring, 10);
     }
 
-    public void clickByArticleWithoutSubstring(String substring) {
+    @Step("Clicking by article without description in search results")
+    public void clickByArticleWithoutDescription(String substring) {
         String search_result_xpath = getResultSearchElementbyArticleTitle(substring);
         this.waitForElementAndClick(search_result_xpath, "Cannot find and click search result with substring " + substring, 10);
     }
@@ -92,11 +93,12 @@ abstract public class SearchPageObject extends MainPageObject {
         return this.getAmountOfElements(SEARCH_RESULT_ELEMENT);
     }
 
+    @Step("Getting amount of articles in search results")
     public int getAmountOfArticles() {
         return this.getAmountOfElements(SEARCH_RESULT_ELEMENT);
     }
 
-    @Step("Waiting for empty result label")
+    @Step("Waiting for empty results label")
     public void waitForEmptyResultsLabel() {
         this.waitForElementPresent(SEARCH_EMPTY_RESULT_ELEMENT, "Cannot find empty result element", 15);
 
@@ -107,10 +109,12 @@ abstract public class SearchPageObject extends MainPageObject {
         this.assertElementNotPresent(SEARCH_RESULT_ELEMENT,"We supposed not to find any results");
     }
 
+    @Step("Waiting for image 'empty results' is not present")
     public void waitForEmptyResultsImageNotPresent() {
         this.waitForElementNotPresent(SEARCH_EMPTY_RESULT_IMAGE, "The Search result is empty", 15);
     }
 
+    @Step("Assert that search element has text '{expected_text}'")
     public WebElement assertSearchElementHasText(String expected_text) {
         WebElement element = this.waitForElementPresent(SEARCH_INIT_ELEMENT_FIELD, "Cannot find search init element", 5);
         String element_text;
@@ -132,6 +136,7 @@ abstract public class SearchPageObject extends MainPageObject {
         return element;
     }
 
+    @Step("Waiting for element with title '{title}' and description '{description}' at the same time")
     public void waitForElementByTitleAndDescription(String title, String description) {
         String search_result_xpath = getResultSearchElementByTitleAndDescription(title, description);
         this.waitForElementPresent(search_result_xpath, "Cannot find article with title '" + title + "' and description '" + description + "'", 5);

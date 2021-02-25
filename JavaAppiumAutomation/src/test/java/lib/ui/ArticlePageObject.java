@@ -122,6 +122,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         );
     }
 
+    @Step("Adding article to existing list")
     public void addArticleToExistsList(String name_of_folder) {
         this.waitForElementAndClick(
                 OPTIONS_BUTTON,
@@ -186,6 +187,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Clear previous search input in search field")
     public void clearPreviousSearchInput() {
         this.waitForElementAndClick(
                 CLEAR_SEARCH_INPUT,
@@ -208,6 +210,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Check that opened article is already saved")
     public void checkOpenedArticleIsSaved() {
         this.waitForElementPresent(
                 OPTIONS_REMOVE_FROM_MY_LIST_BUTTON,

@@ -2,6 +2,7 @@ package lib;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.qameta.allure.Step;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -29,6 +30,7 @@ public class Platform {
         return instance;
     }
 
+    @Step("Getting driver")
     public RemoteWebDriver getDriver() throws Exception {
         URL URL = new URL(APPIUM_URL);
         if (this.isAndroid()) {

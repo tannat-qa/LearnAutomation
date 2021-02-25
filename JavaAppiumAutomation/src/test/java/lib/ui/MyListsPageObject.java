@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -29,6 +30,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         super(driver);
     }
 
+    @Step("Swipe by article with title '{article_title}' to delete it")
     public void swipeByArticleToDelete(String article_title) {
         this.waitForArticleToAppearByTitle(article_title);
         String article_xpath = getSavedArticleXpathByTitle(article_title);
@@ -54,24 +56,28 @@ abstract public class MyListsPageObject extends MainPageObject {
         this.waitForArticleToDisappearByTitle(article_title);
     }
 
+    @Step("Check that saved article with title '{article_title}' is present")
     public void waitForArticleToAppearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
 
         this.waitForElementPresent(article_xpath, "Cannot find saved article by title " + article_title, 15);
     }
 
+    @Step("Check that article with title '{article_title}' is not present")
     public void waitForArticleToDisappearByTitle(String article_title) {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
 
         this.waitForElementNotPresent(article_xpath, "Saved article still present with title " + article_title, 15);
     }
 
+    @Step("Open the selected folder '{name_of_folder}'")
     public void selectFolderByName(String name_of_folder) {
         String folder_name_xpath = getFolderXpathByName(name_of_folder);
 
         this.waitForElementAndClick(folder_name_xpath, "Cannot find folder by name " + name_of_folder, 5);
     }
 
+    @Step("Open 'My lists' menu")
     public void openMyLists (int count_of_folders) {
         this.waitForElementAndClick(
                 MY_LISTS_ELEMENT,
@@ -88,6 +94,7 @@ abstract public class MyListsPageObject extends MainPageObject {
         );
     }
 
+    @Step("Click and open the first saved article in my lists")
     public void openFirstSavedArticleFromList() {
         this.waitForElementAndClick(
                 FIRST_SAVED_ARTICLE_PATH,

@@ -7,9 +7,9 @@ import tests.*;
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
+        MyListsTest.class,
         ArticleTests.class,
         ChangeAppConditionTests.class,
-        MyListsTest.class,
         SearchTests.class
 })
 

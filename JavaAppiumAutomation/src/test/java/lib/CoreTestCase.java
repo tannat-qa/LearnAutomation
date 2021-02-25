@@ -55,7 +55,7 @@ public class CoreTestCase {
         }
     }
 
-    @Step("Set mobile app to background (this method does nothing for Mobile Web)")
+    @Step("Set mobile app to the background (this method does nothing for Mobile Web)")
     protected void backgroundApp (int seconds) {
         if (driver instanceof AppiumDriver) {
             AppiumDriver driver = (AppiumDriver) this.driver;
@@ -73,7 +73,7 @@ public class CoreTestCase {
         }
     }
 
-    @Step("Open Wikipedia URL for Mobile Web (this method does nothing for Mobile Web)")
+    @Step("Open Wikipedia URL for Mobile Web (this method does nothing for Android & iOS)")
     protected void openWikiWebPageForMobileWeb() {
         if (Platform.getInstance().isMw()) {
             driver.get("https://en.m.wikipedia.org");

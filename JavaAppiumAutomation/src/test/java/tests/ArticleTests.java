@@ -59,6 +59,11 @@ public class ArticleTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value="Search"),@Feature(value="Article")})
+    @DisplayName("Check article title is present on page")
+    @Description("Check that article title is present on page without wait after opening article")
+    @Step("Starting test testAssertElementPresent")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testAssertElementPresent() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
@@ -86,6 +91,11 @@ public class ArticleTests extends CoreTestCase {
     }
 
     @Test
+    @Features(value = {@Feature(value="Search"),@Feature(value="Article")})
+    @DisplayName("Check search articles results by title and description")
+    @Description("Check search results by title and description at the same time")
+    @Step("Starting test testSearchArticlesByTitleAndDescription")
+    @Severity(value = SeverityLevel.MINOR)
     public void testSearchArticlesByTitleAndDescription() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
