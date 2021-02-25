@@ -4,6 +4,7 @@ import lib.CoreTestCase;
 import lib.Platform;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.SearchPageObjectFactory;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -41,7 +42,7 @@ public class SearchTests extends CoreTestCase {
 
         int amount_of_search_results = SearchPageObject.getAmountOfFoundArticles();
 
-        assertTrue(
+        Assert.assertTrue(
                 "We found too few results",
                 amount_of_search_results > 0
         );
@@ -67,7 +68,7 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.typeSearchLine(search_line);
 
         int elementsCountOnPage = SearchPageObject.getAmountOfFoundArticles();
-        assertTrue(
+        Assert.assertTrue(
                 "We found too few results",
                 elementsCountOnPage > 0
         );
@@ -77,7 +78,7 @@ public class SearchTests extends CoreTestCase {
 
         elementsCountOnPage = SearchPageObject.getAmountOfArticles();
         // Количество должно быть 0
-        assertTrue("The search result is not cleared", elementsCountOnPage == 0);
+        Assert.assertTrue("The search result is not cleared", elementsCountOnPage == 0);
     }
 
     @Test
@@ -90,7 +91,7 @@ public class SearchTests extends CoreTestCase {
 
         // Вычисляем количество строк результата поиска
         int elementsCountOnPage = SearchPageObject.getAmountOfFoundArticles();
-        assertTrue(
+        Assert.assertTrue(
                 "The search result is empty",
                 elementsCountOnPage > 0
         );
@@ -117,7 +118,7 @@ public class SearchTests extends CoreTestCase {
             } else {
                 str = element_list.get(i).getAttribute("data-title").toLowerCase();
             }
-            assertTrue("The search result string does not contain search word " + search_line, str.indexOf(search_line) > -1);
+            Assert.assertTrue("The search result string does not contain search word " + search_line, str.indexOf(search_line) > -1);
         }
     }
 
